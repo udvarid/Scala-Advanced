@@ -29,37 +29,15 @@ object TypeClasses extends App {
     def serialize(user: User): String = s"<div>$user.name ($user.age) <a href=$user.email/> </div>"
   }
 
-  val john = User("John", 33, "John@hotmail.com")
-  println(UserSerialize.serialize(john))
+
 
   //Typeclass
   trait MyTypeClass[T] {
     def action(value: T): String
   }
 
-  /*
-  * Equality
-   */
-  trait Equal[T] {
-    def apply(a: T, b: T): Boolean
-  }
 
-  implicit object NameEquality extends Equal[User] {
-    override def apply(a: User, b: User): Boolean = a.name == b.name
-  }
 
-  object FullyEquality extends Equal[User] {
-    override def apply(a: User, b: User): Boolean = a.name == b.name && a.email == b.email
-  }
-
-  object Equal {
-    def apply[T](a: T, b: T)(implicit equalizer: Equal[T]): Boolean =
-      equalizer.apply(a, b)
-  }
-
-  val john2 = User("John", 34, "John2@hotmail.com")
-
-  println(Equal(john, john2))
 
 
 }
