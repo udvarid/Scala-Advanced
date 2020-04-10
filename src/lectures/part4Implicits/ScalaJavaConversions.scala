@@ -14,4 +14,21 @@ object ScalaJavaConversions extends App {
   val scalaSet = javaSet.asScala
 
   println(scalaSet)
+
+  /*
+  Exercise
+  create a Scala-Java Optional-Option
+    .asScala
+ */
+  class ToScala[T](value: => T) {
+    def asScala: T = value
+  }
+
+  implicit def asScalaOptional[T](o: ju.Optional[T]): ToScala[Option[T]] = new ToScala[Option[T]](
+    if (o.isPresent) Some(o.get) else None
+  )
+
+  val juOptional: ju.Optional[Int] = ju.Optional.of(2)
+  val scalaOption = juOptional.asScala
+  println(scalaOption)
 }
